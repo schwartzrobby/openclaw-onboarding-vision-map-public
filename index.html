@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>V26 Interactive Vision Map v4</title>
+<style>
+:root{--bg1:#201046;--bg2:#5d2d64;--bg3:#dc7a58;--card:rgba(255,255,255,.14);--stroke:rgba(255,255,255,.35);--txt:#fffaf5;--muted:#ffeedd;--acc:#fde68a}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,"Noto Sans",system-ui;color:var(--txt);background:linear-gradient(135deg,var(--bg1),var(--bg2),var(--bg3));overflow:hidden;}
+.shell{display:grid;grid-template-columns:minmax(0,1fr) 420px;gap:16px;padding:16px;height:100vh}
+.stage,.panel{border:1px solid rgba(255,255,255,.2);border-radius:18px;background:rgba(0,0,0,.16);backdrop-filter:blur(8px)}
+.stage{padding:14px;overflow:hidden}.panel{padding:14px;overflow-y:auto;overflow-x:hidden;height:calc(100vh - 32px)}
+h1{margin:0 0 4px;font-size:34px}.sub{margin:0 0 10px;color:var(--muted)}
+svg{width:100%;height:calc(100vh - 120px);min-height:760px;display:block}
+.node{cursor:pointer}.node rect{fill:var(--card);stroke:var(--stroke)}.node.active rect{stroke:var(--acc);stroke-width:2.4}
+.node.stage-passed rect{stroke:#22c55e !important;stroke-width:2.4}
+.k{font-size:18px;letter-spacing:.08em;fill:var(--acc);font-weight:700;text-anchor:middle}
+.h{font-size:23px;font-weight:800;fill:#fffaf5;text-anchor:middle}
+.b{font-size:19px;fill:#fff1e8;text-anchor:middle}
+.hs{font-size:19px;font-weight:800;fill:#fffaf5;text-anchor:middle}
+.wire{stroke:#fde68a;stroke-width:3.2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.pill{display:inline-block;padding:5px 9px;border:1px solid rgba(253,230,138,.5);border-radius:999px;background:rgba(253,230,138,.2);font-size:12px;font-weight:700;color:var(--acc)}
+.section{margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,.16)}ul{margin:6px 0 0 18px;padding:0}li{margin:4px 0;color:#fff1e8}
+</style></head>
+<body><div class="shell"><div class="stage">
+<h1>OpenClaw Setup Guide: From Zero to Live</h1><p class="sub">Interactive step-by-step setup with validation at each stage</p>
+<div id="statusRail" style="margin:8px 0 10px;padding:8px 10px;border:1px solid rgba(255,255,255,.2);border-radius:10px;background:rgba(0,0,0,.15);font-size:12px;color:#fde68a"></div>
+<svg viewBox="0 0 2200 980" preserveAspectRatio="xMidYMid meet">
+  <!-- connectors -->
+  <path class="wire" d="M420 145 H520 V240 H560"/>
+  <path class="wire" d="M930 240 H1010 V335 H1060"/>
+  <path class="wire" d="M1450 335 H1540 V435 H1560"/>
+  <path class="wire" d="M1255 395 V430"/>
+  <path class="wire" d="M1255 510 V620"/>
+  <path class="wire" d="M1255 620 H970 V640"/>
+  <path class="wire" d="M1255 620 H1200 V640"/>
+  <path class="wire" d="M1255 620 H1440 V640"/>
+  <path class="wire" d="M225 205 V380"/>
+  <path class="wire" d="M225 460 V490"/>
+  <path class="wire" d="M745 300 V450"/>
+  <path class="wire" d="M745 450 H530 V470"/>
+  <path class="wire" d="M745 450 H770 V470"/>
+
+  <!-- nodes -->
+  <g class="node" data-key="ignite" transform="translate(30,85)"><rect width="390" height="120" rx="16"/><text class="k" x="195" y="22">IGNITION</text><text class="h" x="195" y="52" style="font-size:27px">Gateway Online</text><text class="b" x="195" y="78" style="font-size:19px">Your AI Partner is Awake</text></g>
+  <g class="node" data-key="connect" transform="translate(560,180)"><rect width="370" height="120" rx="16"/><text class="k" x="185" y="22">CONNECTION</text><text class="h" x="185" y="50">Power is connected</text><text class="b" x="185" y="76">Credentials + billing</text></g>
+  <g class="node" data-key="channel" transform="translate(1060,275)"><rect width="390" height="120" rx="16"/><text class="k" x="195" y="22">ACTIVATION</text><text class="h" x="195" y="50">Your channel is open</text><text class="b" x="195" y="76">Telegram pairing</text></g>
+  <g class="node" data-key="telegram" transform="translate(1130,430)"><rect width="250" height="80" rx="14"/><text class="h" x="125" y="46" style="font-size:18px">Telegram</text></g>
+  <g class="node" data-key="bottoken" transform="translate(860,640)"><rect width="220" height="72" rx="12"/><text class="hs" x="110" y="42">Bot Token Setup</text></g>
+  <g class="node" data-key="pairingapproval" transform="translate(1090,640)"><rect width="220" height="72" rx="12"/><text class="hs" x="110" y="42">Pairing Approval</text></g>
+  <g class="node" data-key="channelhealth" transform="translate(1320,640)"><rect width="240" height="72" rx="12"/><text class="hs" x="120" y="42">Channel Health Check</text></g>
+  <g class="node" data-key="execute" transform="translate(1560,370)"><rect width="390" height="130" rx="16"/><text class="k" x="195" y="22">MOMENTUM</text><text class="h" x="195" y="52">Ideas become action</text><text class="b" x="195" y="80">Model + tools execution</text></g>
+
+  <g class="node" data-key="output" transform="translate(1620,640)"><rect width="180" height="90" rx="14"/><text class="hs" x="90" y="42">Output +</text><text class="hs" x="90" y="60">Monitoring</text></g>
+  <g class="node" data-key="logs" transform="translate(1820,640)"><rect width="180" height="90" rx="14"/><text class="hs" x="90" y="42">Data / Logs /</text><text class="hs" x="90" y="60">State</text></g>
+  <g class="node" data-key="trouble" transform="translate(2020,640)"><rect width="180" height="90" rx="14"/><text class="hs" x="90" y="42">Troubleshooting</text><text class="hs" x="90" y="60">Loop</text></g>
+
+  <g class="node" data-key="runtime" transform="translate(95,380)"><rect width="260" height="80" rx="14"/><text class="h" x="130" y="46" style="font-size:21px">Always-on runtime</text></g>
+  <g class="node" data-key="terminal" transform="translate(95,490)"><rect width="260" height="80" rx="14"/><text class="h" x="130" y="46" style="font-size:21px">Terminal control</text></g>
+  <g class="node" data-key="billing" transform="translate(420,470)"><rect width="220" height="72" rx="12"/><text class="h" x="110" y="42" style="font-size:20px">Billing checkpoint</text></g>
+  <g class="node" data-key="safety" transform="translate(660,470)"><rect width="220" height="72" rx="12"/><text class="h" x="110" y="42" style="font-size:20px">Safety gates</text></g>
+
+  <!-- Added critical step-by-step completeness items (clean orthogonal routing) -->
+  <path class="wire" d="M745 450 H975 V470"/>
+  <g class="node" data-key="security" transform="translate(900,470)"><rect width="150" height="72" rx="10"/><text class="hs" x="75" y="42">Security Gate</text></g>
+
+  <!-- Momentum section (two straight trunks as requested) -->
+  <!-- right trunk: outputs -->
+  <path class="wire" d="M1880 500 V620"/>
+  <path class="wire" d="M1880 620 H1710 V640"/>
+  <path class="wire" d="M1880 620 H1910 V640"/>
+  <path class="wire" d="M1880 620 H2110 V640"/>
+
+  <!-- left trunk: downstream operations -->
+  <path class="wire" d="M1590 500 V760"/>
+  <path class="wire" d="M1590 760 H1455 V780"/>
+  <path class="wire" d="M1590 760 H1665 V780"/>
+  <path class="wire" d="M1590 760 H1875 V780"/>
+  <path class="wire" d="M1590 760 H2085 V780"/>
+
+  <g class="node" data-key="testvalidate" transform="translate(1570,780)"><rect width="190" height="64" rx="12"/><text class="hs" x="95" y="40">Test Validate</text></g>
+  <g class="node" data-key="production" transform="translate(1780,780)"><rect width="190" height="64" rx="12"/><text class="hs" x="95" y="40">Production</text></g>
+
+  <g class="node" data-key="backup" transform="translate(1360,780)"><rect width="190" height="64" rx="12"/><text class="hs" x="95" y="40">Backup + Rollback</text></g>
+
+  <g class="node" data-key="golive" transform="translate(1990,780)"><rect width="190" height="64" rx="12"/><text class="hs" x="95" y="40">Go-Live Gate</text></g>
+
+</svg></div>
+<aside class="panel" id="panel"></aside></div>
+<script>
+const data={
+ignite:{tag:'IGNITION',title:'Gateway Online',desc:'Bring the core runtime online first.',playbook:[
+  {where:'Host machine terminal (laptop or cloud server)',do:'Install Node.js 22+ and verify version.',cmd:{mac:'brew install node@22 && node -v',linux:'sudo dnf install -y nodejs && node -v',windows:'winget install OpenJS.NodeJS.LTS && node -v'},success:'Terminal prints v22.x.x (or newer).',fail:'If command not found, restart terminal and re-run install.'},
+  {where:'Same host machine terminal',do:'Install OpenClaw and run onboarding.',cmd:{mac:'curl -fsSL https://openclaw.ai/install.sh | bash',linux:'curl -fsSL https://openclaw.ai/install.sh | bash',windows:'iwr https://openclaw.ai/install.ps1 -UseBasicParsing | iex'},success:'Onboarding completes and config is saved.',fail:'If script fails, check internet/proxy/firewall and rerun.'},
+  {where:'Same host machine terminal',do:'Start gateway and verify health.',cmd:{mac:'openclaw gateway start && openclaw gateway status',linux:'openclaw gateway start && openclaw gateway status',windows:'openclaw gateway start; openclaw gateway status'},success:'Gateway reports running status.',fail:'If not running, check logs and restart.'}
+],downloads:[['Node.js (host machine)','https://nodejs.org/en/download'],['OpenClaw install (Linux/macOS host)','https://openclaw.ai/install.sh'],['OpenClaw install (Windows host)','https://openclaw.ai/install.ps1']],next:'Then complete Connection.'},
+connect:{tag:'CONNECTION',title:'Power is connected',desc:'Credentials + billing must be valid.',playbook:[
+  {where:'Provider dashboard in browser',do:'Create/verify provider account and API key.',success:'API key generated.',fail:'If blocked, complete provider verification steps.'},
+  {where:'Host machine `.env` or secret store',do:'Add provider keys and restart gateway.',cmd:{mac:'nano .env',linux:'nano .env',windows:'notepad .env'},success:'No missing-key errors on startup.',fail:'If auth fails, rotate/regenerate key.'},
+  {where:'Provider billing page',do:'Enable payment method and run test call.',success:'No quota/billing error returned.',fail:'If quota persists, verify plan/limits.'}
+],downloads:[['OpenAI platform','https://platform.openai.com/'],['Anthropic console','https://console.anthropic.com/'],['Google AI Studio','https://aistudio.google.com/']],next:'Then open channel access.'},
+channel:{tag:'ACTIVATION',title:'Your channel is open',desc:'Telegram setup + pairing.',playbook:[
+  {where:'Telegram app (@BotFather)',do:'Create bot and copy bot token.',success:'Bot token issued by BotFather.',fail:'If lost, regenerate token in BotFather.'},
+  {where:'Host machine config/env',do:'Set TELEGRAM_BOT_TOKEN and restart gateway.',cmd:{mac:'export TELEGRAM_BOT_TOKEN=[YOUR_TOKEN]',linux:'export TELEGRAM_BOT_TOKEN=[YOUR_TOKEN]',windows:'setx TELEGRAM_BOT_TOKEN "[YOUR_TOKEN]"'},success:'Gateway starts with Telegram channel enabled.',fail:'If invalid token, re-copy from BotFather.'},
+  {where:'Telegram chat',do:'Message bot and complete pairing.',success:'Bot replies in DM.',fail:'If no reply, check gateway status + pairing state.'}
+],downloads:[['Telegram apps','https://telegram.org/apps'],['BotFather docs','https://core.telegram.org/bots#6-botfather']],next:'Then validate execution quality.'},
+telegram:{tag:'CHANNEL',title:'Telegram',desc:'Dedicated Telegram setup and health workflow.',playbook:[
+  {where:'Telegram app',do:'Open @BotFather and verify bot token is active.',success:'Token confirmed active.',fail:'Regenerate token and update config.'},
+  {where:'Host machine terminal',do:'Restart gateway after token/config updates.',cmd:{mac:'openclaw gateway restart',linux:'openclaw gateway restart',windows:'openclaw gateway restart'},success:'Gateway returns running.',fail:'Check gateway status/logs and retry.'},
+  {where:'Telegram chat',do:'Run inbound/outbound test message and latency check.',success:'Message round-trip succeeds.',fail:'Re-check pairing + channel config.'}
+],downloads:[['Telegram apps','https://telegram.org/apps'],['BotFather docs','https://core.telegram.org/bots#6-botfather']],next:'Proceed to token/pairing/health detail boxes.'},
+bottoken:{tag:'CHANNEL',title:'Bot Token Setup',desc:'Generate and store Telegram bot token correctly.',playbook:[{where:'Telegram @BotFather + host config',do:'Create bot token and save it in environment/config.',success:'Gateway recognizes TELEGRAM_BOT_TOKEN.',fail:'Regenerate token and re-paste without extra spaces.'}],downloads:[['BotFather docs','https://core.telegram.org/bots#6-botfather']],next:'Then complete Pairing Approval.'},
+pairingapproval:{tag:'CHANNEL',title:'Pairing Approval',desc:'Authorize channel pairing for active communication.',playbook:[{where:'Telegram chat + OpenClaw pairing flow',do:'Approve pairing request from the correct account.',success:'Inbound and outbound messages work.',fail:'Reset pairing state and retry approval.'}],downloads:[],next:'Then run Channel Health Check.'},
+channelhealth:{tag:'CHANNEL',title:'Channel Health Check',desc:'Validate channel reliability before live usage.',playbook:[{where:'Telegram chat + logs',do:'Test inbound, outbound, and response latency.',success:'All checks pass with stable behavior.',fail:'Investigate token, gateway status, and channel config.'}],downloads:[],next:'Activation channel path is production-ready.'},
+execute:{tag:'MOMENTUM',title:'Ideas become action',desc:'Model + tools execute real tasks.',playbook:[
+  {where:'Telegram chat',do:'Run a simple question task.',success:'Clean model response.',fail:'If error, inspect logs and auth.'},
+  {where:'Telegram chat + tools',do:'Run a tool-enabled task.',success:'Tool executes and returns result.',fail:'If tool fails, check permissions + network.'},
+  {where:'Ops review',do:'Validate latency + response quality.',success:'Output meets your standard.',fail:'Tune model or prompt strategy.'}
+],downloads:[['OpenClaw docs','https://docs.openclaw.ai']],next:'Then operationalize outcomes.'},
+output:{tag:'OUTCOME',title:'Output + Monitoring',desc:'Make progress visible and trustworthy.',playbook:[{where:'Ops dashboard/logs',do:'Track response success + latency.',success:'Daily health is visible.',fail:'Add structured logs + alerting.'}],downloads:[],next:'Use logs/state for diagnosis.'},
+logs:{tag:'OUTCOME',title:'Data / Logs / State',desc:'Source of truth for debugging.',playbook:[{where:'Host log storage',do:'Keep timestamped structured logs.',success:'You can trace failures quickly.',fail:'Add context fields to logs.'}],downloads:[],next:'Feed troubleshooting loop.'},
+trouble:{tag:'OUTCOME',title:'Troubleshooting Loop',desc:'Fast recovery path.',playbook:[{where:'Host terminal',do:'status → logs → restart → pairing check',success:'Service returns healthy.',fail:'Escalate with captured logs.'}],downloads:[],next:'Document as SOP.'},
+runtime:{tag:'SUPPORT',title:'Always-on runtime',desc:'No babysitting required.',playbook:[{where:'Service manager on host',do:'Enable auto-start + auto-restart.',success:'Service survives reboot/crash.',fail:'Fix startup registration.'}],downloads:[['PM2 quick start','https://pm2.keymetrics.io/docs/usage/quick-start/']],next:'Supports reliable uptime.'},
+terminal:{tag:'SUPPORT',title:'Terminal control',desc:'Operator command center.',playbook:[{where:'Host terminal',do:'Know start/stop/restart/log commands.',success:'Operator can recover quickly.',fail:'Create and follow runbook cheatsheet.'}],downloads:[],next:'Improves day-to-day operations.'},
+billing:{tag:'SUPPORT',title:'Billing checkpoint',desc:'Prevent silent outages.',playbook:[{where:'Provider billing dashboard',do:'Enable alerts + verify payment.',success:'No unexpected quota failures.',fail:'Configure spend thresholds.'}],downloads:[],next:'Protects continuity.'},
+safety:{tag:'SUPPORT',title:'Safety gates',desc:'Guardrails for risky actions.',playbook:[{where:'OpenClaw policy/config',do:'Require approvals for sensitive operations.',success:'Risky actions blocked by default.',fail:'Tighten allow/deny rules.'}],downloads:[],next:'Builds trust and control.'},
+security:{tag:'GATE',title:'Security Gate',desc:'Security readiness checkpoint before activation.',playbook:[{where:'Host + policy settings',do:'Verify approval prompts, auth rules, and secret handling are enabled.',success:'Sensitive actions require confirmation.',fail:'Harden policy and re-test protected actions.'}],downloads:[],next:'Proceed to channel activation.'},
+testvalidate:{tag:'QUALITY',title:'Test Validate',desc:'Confirm behavior in test mode before production.',playbook:[{where:'Test environment/channel',do:'Run scripted tests for prompt quality, tool behavior, and safety.',success:'All critical tests pass.',fail:'Fix failing tests before promotion.'}],downloads:[],next:'Promote to Production when green.'},
+production:{tag:'RELEASE',title:'Production',desc:'Move validated workflow to real usage.',playbook:[{where:'Production environment',do:'Promote tested configuration and monitor first runs closely.',success:'Live runs succeed with stable metrics.',fail:'Rollback to previous stable version.'}],downloads:[],next:'Open Go-Live gate.'},
+backup:{tag:'RESILIENCE',title:'Backup + Rollback',desc:'Protect continuity before and after launch.',playbook:[{where:'Repo + infrastructure',do:'Create backup snapshot and confirm rollback command/path.',success:'Recovery path tested and documented.',fail:'Do not launch until rollback is proven.'}],downloads:[],next:'Supports safe production operations.'},
+golive:{tag:'MILESTONE',title:'Go-Live Gate',desc:'Final readiness checkpoint for launch.',playbook:[{where:'Launch checklist',do:'Confirm health, quality, safety, backup, and monitoring are all green.',success:'Launch approved.',fail:'Hold launch and resolve unmet checks.'}],downloads:[],next:'Begin live operation and monitor closely.'}
+};
+
+const panel=document.getElementById('panel');
+const statusRail=document.getElementById('statusRail');
+const nodes=[...document.querySelectorAll('.node')];
+const guidedState={};
+const stageState={};
+const majorStages=['ignite','connect','channel','execute'];
+
+function centerAllBoxText(){nodes.forEach(n=>{const rect=n.querySelector('rect'); if(!rect) return; const w=(+rect.getAttribute('width')||0),h=(+rect.getAttribute('height')||0),cx=w/2; const texts=[...n.querySelectorAll('text')]; texts.forEach(t=>{t.setAttribute('x',cx);t.setAttribute('text-anchor','middle');}); const key=n.dataset.key,big=['ignite','connect','channel','execute']; if(big.includes(key)&&texts.length>=3){const mid=h/2; texts[0].setAttribute('y',(mid-26).toFixed(1)); texts[1].setAttribute('y',(mid+4).toFixed(1)); texts[2].setAttribute('y',(mid+34).toFixed(1));}});} 
+
+function stepKey(k,i){return `${k}:${i}`;}
+
+function runCheck(k,i){
+  const key=stepKey(k,i);
+  guidedState[key]=guidedState[key]==='passed' ? 'not-started' : 'passed';
+  render(k);
+}
+
+function runStageValidation(k){
+  const steps=(data[k]?.playbook||[]).length;
+  const passed=Array.from({length:steps}).filter((_,i)=>guidedState[stepKey(k,i)]==='passed').length;
+  if(steps===0 || passed<steps){
+    alert(`Stage validation blocked: ${passed}/${steps} step checks passed. Complete all checks first.`);
+    return;
+  }
+  stageState[k]='passed';
+  render(k);
+}
+function updateRail(){
+  const passed=majorStages.filter(k=>stageState[k]==='passed').length;
+  const pct=Math.round((passed/majorStages.length)*100);
+  statusRail.innerHTML=`Stage Validation: ${passed}/${majorStages.length} passed (${pct}%)`;
+  nodes.forEach(n=>n.classList.toggle('stage-passed', stageState[n.dataset.key]==='passed'));
+}
+
+function render(k){
+  const d=data[k];
+  nodes.forEach(n=>n.classList.toggle('active',n.dataset.key===k));
+
+  const total=(d.playbook||[]).length;
+  const passed=(d.playbook||[]).filter((_,i)=>guidedState[stepKey(k,i)]==='passed').length;
+  if(majorStages.includes(k) && stageState[k]==='passed' && passed<total){
+    stageState[k]='not-started';
+  }
+
+  const play=(d.playbook||[]).map((s,i)=>{
+    const status=guidedState[stepKey(k,i)]||'not-started';
+    const badge=status==='passed' ? '✅ Passed' : '🕓 Not started';
+    const cmd=s.cmd?`<div style="margin-top:6px"><strong>Commands:</strong><br><span style="color:#fde68a">Mac:</span> <code>${s.cmd.mac||'—'}</code><br><span style="color:#fde68a">Linux:</span> <code>${s.cmd.linux||'—'}</code><br><span style="color:#fde68a">Windows:</span> <code>${s.cmd.windows||'—'}</code></div>`:'';
+    const btn=status==='passed'
+      ? `<button style="margin-top:6px;padding:6px 10px;border-radius:8px;border:1px solid #22c55e;background:rgba(34,197,94,.2);color:#dcfce7;cursor:pointer" onclick="runCheck('${k}',${i})">Completed</button>`
+      : `<button style="margin-top:6px;padding:6px 10px;border-radius:8px;border:1px solid #38bdf8;background:rgba(56,189,248,.2);color:#dbeafe;cursor:pointer" onclick="runCheck('${k}',${i})">Completed</button>`;
+    return `<li style='margin-bottom:10px'><strong>Step ${i+1}</strong> <span style='font-size:12px;color:#fde68a'>${badge}</span><br><strong>Where:</strong> ${s.where}<br><strong>Do:</strong> ${s.do}${cmd}<br><strong>Success looks like:</strong> ${s.success}<br><strong>If it fails:</strong> ${s.fail}<br>${btn}</li>`;
+  }).join('');
+
+  const dl=(d.downloads||[]).map(([name,url])=>`<li><a href="${url}" target="_blank" rel="noopener noreferrer" style="color:#fde68a">${name}</a></li>`).join('');
+
+  const isMajor=majorStages.includes(k);
+  const majorPassed=majorStages.filter(s=>stageState[s]==='passed').length;
+  panel.innerHTML=`
+    <span class='pill'>${d.tag}</span>
+    <h2 style='margin:8px 0 4px'>${d.title}</h2>
+    <p style='margin:0;color:#ffeedd'>${d.desc}</p>
+
+    <div class='section'>
+      <strong>Guided Mode Progress</strong>
+      <div style='margin-top:6px;font-size:13px;color:#fde68a'>${passed}/${total} checks passed</div>
+      <div style='margin-top:6px;height:8px;background:rgba(255,255,255,.18);border-radius:999px;overflow:hidden'>
+        <div style='height:100%;width:${total?Math.round((passed/total)*100):0}%;background:#22c55e'></div>
+      </div>
+    </div>
+
+    <div class='section'>
+      <strong>Stage Completion</strong>
+      ${isMajor ? `<div style='margin-top:8px'><button style="padding:7px 12px;border-radius:8px;border:1px solid #22c55e;background:rgba(34,197,94,.2);color:#dcfce7;cursor:pointer" onclick="runStageValidation('${k}')">Mark Stage Complete</button></div>` : `<p style='margin:6px 0 0;color:#ffeedd'>This node is supporting detail, not a major stage.</p>`}
+      <div style='margin-top:8px;font-size:12px;color:#fde68a'>Major stages passed: ${majorPassed}/${majorStages.length}</div>
+      ${majorPassed===majorStages.length ? `<div style='margin-top:8px;padding:8px 10px;border-radius:8px;background:rgba(34,197,94,.2);border:1px solid #22c55e;color:#dcfce7'>🏁 Officially Built — all major stages validated.</div>` : ''}
+    </div>
+
+    <div class='section'><strong>Step-by-step guide</strong><ul>${play}</ul></div>
+    <div class='section'><strong>Required downloads / links</strong>${dl?`<ul>${dl}</ul>`:'<p style="margin:6px 0 0;color:#ffeedd">No additional download required for this node.</p>'}</div>
+    <div class='section'><strong>What this unlocks next</strong><p style='margin:6px 0 0;color:#ffeedd'>${d.next}</p></div>
+  `;
+  updateRail();
+}
+
+centerAllBoxText();
+nodes.forEach(n=>n.onclick=()=>render(n.dataset.key));
+updateRail();
+render('ignite');
+</script></body></html>
