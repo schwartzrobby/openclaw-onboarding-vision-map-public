@@ -20,6 +20,16 @@ svg{width:100%;height:calc(100vh - 120px);min-height:760px;display:block}
 .wire{stroke:#fde68a;stroke-width:3.2;fill:none;stroke-linecap:round;stroke-linejoin:round}
 .pill{display:inline-block;padding:5px 9px;border:1px solid rgba(253,230,138,.5);border-radius:999px;background:rgba(253,230,138,.2);font-size:12px;font-weight:700;color:var(--acc)}
 .section{margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,.16)}ul{margin:6px 0 0 18px;padding:0}li{margin:4px 0;color:#fff1e8}
+
+@media (max-width: 900px){
+  body{overflow:auto}
+  .shell{grid-template-columns:1fr;height:auto;min-height:100vh}
+  .stage{overflow:auto}
+  .panel{height:auto;max-height:none;overflow:auto}
+  #statusRail{position:sticky;top:0;z-index:5}
+  svg{width:1700px;height:980px;min-height:980px}
+  button{min-height:40px;font-size:14px}
+}
 </style></head>
 <body><div class="shell"><div class="stage">
 <h1>OpenClaw Setup Guide: From Zero to Live</h1><p class="sub">Interactive step-by-step setup with validation at each stage</p>
