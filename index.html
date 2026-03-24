@@ -226,7 +226,7 @@ function render(k){
 }
 
 centerAllBoxText();
-nodes.forEach(n=>n.onclick=()=>render(n.dataset.key));
+nodes.forEach(n=>n.onclick=()=>{render(n.dataset.key); if(window.innerWidth<=900){panel.scrollIntoView({behavior:'smooth',block:'start'});}});
 updateRail();
 render('ignite');
 </script></body></html>
